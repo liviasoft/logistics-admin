@@ -36,7 +36,7 @@ jobs:
       run: npm test
   
   create-release:
-    if: (github.event_name == 'push' || github.event.pull_request.merged == true) && github.ref == 'refs/heads/main'
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event.pull_request.merged == true && github.base_ref == 'main')
     needs: 
       - lint-and-test
     runs-on: ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
           title: "Release ${{ env.latest_tag }}"
 
   create-prerelease:
-    if: (github.event_name == 'push' || github.event.pull_request.merged == true) && github.ref == 'refs/heads/staging'
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/staging') || (github.event.pull_request.merged == true && github.base_ref == 'staging')
     runs-on: ubuntu-latest
     needs: 
       - lint-and-test
