@@ -3,7 +3,6 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 import reactRecommended from "eslint-plugin-react/configs/recommended.js";
-import { version } from "typescript";
 
 
 /** @type {import('eslint').Linter.Config[]} */
