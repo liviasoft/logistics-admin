@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4-alpha.0](https://github.com/liviasoft/logistics-admin/compare/v0.1.3...v0.1.4-alpha.0) (2025-01-22)
+
+
+### ♾️ Continuous Integration
+
+* fix create prerelease job ([81570c5](https://github.com/liviasoft/logistics-admin/commits/81570c531f6b41f54a9804c7ed6816af6d39db4c))
+
 ### [0.1.3](https://github.com/liviasoft/logistics-admin/compare/v0.1.2...v0.1.3) (2025-01-22)
 
 
