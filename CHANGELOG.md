@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5-alpha.2](https://github.com/liviasoft/logistics-admin/compare/v0.1.5-alpha.1...v0.1.5-alpha.2) (2025-01-22)
+
+
+### 🚚 Chores
+
+* fix issue templates default assignee ([a3e4bad](https://github.com/liviasoft/logistics-admin/commits/a3e4baddba770d7a10a8be79b4b8c20ff289da4e))
+
 ### [0.1.5-alpha.1](https://github.com/liviasoft/logistics-admin/compare/v0.1.5-alpha.0...v0.1.5-alpha.1) (2025-01-22)
 
 
