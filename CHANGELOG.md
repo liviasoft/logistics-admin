@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/liviasoft/logistics-admin/compare/v0.1.2...v0.1.3) (2025-01-22)
+
+
+### 📝 Documentation
+
+* coc, licence, and pr template ([f8a385f](https://github.com/liviasoft/logistics-admin/commits/f8a385fbf81e6f655d3c116fdbb140f4d91b4e65))
+
 ### [0.1.2](https://github.com/liviasoft/logistics-admin/compare/v0.1.1...v0.1.2) (2025-01-22)
 
 
