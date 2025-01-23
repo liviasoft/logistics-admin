@@ -85,7 +85,6 @@ jobs:
     if: contains('dev,staging,main', needs.get-current-branch.outputs.value)
     needs: 
       - get-current-branch
-      - check-branch-rules
     runs-on: ubuntu-latest
     
     steps: 
