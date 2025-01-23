@@ -19,10 +19,19 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
+    - name: Retrieve git config user.name
+      id: get-username
+      run: |
+        USER_NAME=$(git config --get user.name || echo "No user.name found")
+        echo "User name is: $USER_NAME"
+        echo "user_name=$USER_NAME" >> $GITHUB_ENV
+        echo $GITHUB_ENV
+
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '22'
+    
 
     - name: Install Dependencies
       run: npm install
