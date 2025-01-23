@@ -137,9 +137,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -207,9 +208,10 @@ jobs:
         run: echo "Current Branch from previous output is ${{ needs.get-current-branch.outputs.value }}"
       
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
