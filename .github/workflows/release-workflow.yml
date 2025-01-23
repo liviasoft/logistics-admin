@@ -150,6 +150,9 @@ jobs:
           automatic_release_tag: prerelease
           prerelease: true
           title: "Release ${{ env.latest_tag }}"
+      
+      - name: Set for pre-release
+        run: echo "is_prerelease=true" >> $GITHUB_ENV
 
   release:
     name: Push Release
