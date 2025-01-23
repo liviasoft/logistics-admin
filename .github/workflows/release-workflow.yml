@@ -161,7 +161,7 @@ jobs:
 
       - name: Push changes and tags
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token for release
+          GITHUB_TOKEN: ${{ secrets.STANDARD_VERSION_PAT }}  # Use GitHub token for release
         run: |
           git push --follow-tags origin staging
 
@@ -231,7 +231,7 @@ jobs:
 
       - name: Push changes and tags
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token for release
+          GITHUB_TOKEN: ${{ secrets.STANDARD_VERSION_PAT }}  # Use GitHub token for release
         run: |
           git push --follow-tags origin main
 
