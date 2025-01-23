@@ -1,4 +1,4 @@
-name: Lint, Test Release
+name: Lint, Test, Release
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
     branches:
       - main
       - staging
-      - dev
     types:
       - closed
       - opened
@@ -34,11 +33,29 @@ jobs:
 
     - name: Run Tests
       run: npm test
-  
-  create-release:
-    if: (github.event_name == 'push' || (github.event.pull_request.merged == true && github.base_ref == 'main')) && github.ref == 'refs/heads/main'
+
+  get-current-branch:
     needs: 
       - lint-and-test
+    runs-on: ubuntu-latest
+    outputs:
+      value: ${{ env.current_branch }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Get Current Branch
+        # run: echo "value=$(git branch --show-current)" >> $GITHUB_OUTPUT
+        run : echo "current_branch=$(git branch --show-current)" >> $GITHUB_ENV
+      
+      - name: Display Current Branch
+        run: echo "Current Branch is ${{ env.current_branch }}"
+  
+  create-release:
+    if: ${{ needs.get-current-branch.outputs.value == 'main' && (github.event_name == 'push' || (github.event.pull_request.merged == true && github.base_ref == 'main'))}}
+    needs:
+      - get-current-branch
     runs-on: ubuntu-latest
 
     permissions:
@@ -56,6 +73,9 @@ jobs:
       security-events: write
 
     steps:
+      - name: Display Current Branch
+        run: echo "Current Branch from previous output is ${{ needs.get-current-branch.outputs.value }}"
+      
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -100,10 +120,10 @@ jobs:
           title: "Release ${{ env.latest_tag }}"
 
   create-prerelease:
-    if: (github.event_name == 'push' || (github.event.pull_request.merged == true && github.base_ref == 'staging')) && github.ref == 'refs/heads/staging'
+    if: ${{ needs.get-current-branch.outputs.value == 'staging' && (github.event_name == 'push' || (github.event.pull_request.merged == true && github.base_ref == 'staging'))}}
     runs-on: ubuntu-latest
     needs: 
-      - lint-and-test
+      - get-current-branch
     permissions:
         contents: write      # Allows pushing commits and creating tags
         actions: write       # Allows creating releases
