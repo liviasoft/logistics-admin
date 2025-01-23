@@ -18,11 +18,17 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
+    
+    - name: Set Git config
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '22'
+    
 
     - name: Install Dependencies
       run: npm install
@@ -90,6 +96,14 @@ jobs:
     steps: 
       - name: Checkout Repository
         uses: actions/checkout@v3
+
+      - name: Retrieve git config user.name
+        id: get-username
+        run: |
+          USER_NAME=$(git config --get user.name || echo "No user.name found")
+          echo "User name is: $USER_NAME"
+          echo "user_name=$USER_NAME" >> $GITHUB_ENV
+          echo $GITHUB_ENV
 
       - name: Display Current Branch
         run: echo "Current Branch is ${{ needs.get-current-branch.outputs.value }}"
