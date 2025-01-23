@@ -150,9 +150,6 @@ jobs:
           automatic_release_tag: prerelease
           prerelease: true
           title: "Release ${{ env.latest_tag }}"
-      
-      # - name: Set for pre-release
-      #   run: echo "is_prerelease=true" >> $GITHUB_ENV
 
   release:
     name: Push Release
@@ -223,9 +220,6 @@ jobs:
           automatic_release_tag: latest
           prerelease: false
           title: "Release ${{ env.latest_tag }}"
-
-      # - name: Set for release
-      #   run: echo "is_release=true" >> $GITHUB_ENV
 
   deploy-staging:
     name: Deploy to Staging
