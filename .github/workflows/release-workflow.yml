@@ -50,12 +50,42 @@ jobs:
       
       - name: Display Current Branch
         run: echo "Current Branch is ${{ env.current_branch }}"
+  
+  check-branch-rules:
+    if: github.event_name != 'push'
+    needs: 
+      - sanity-check
+      - get-current-branch
+    name: Check Branch Rules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Only allow staging or hotfix to main
+        if: github.base_ref == 'main'
+        run: |
+          if [[ ${{ github.head_ref }} != staging ]] && ! [[ ${{ github.head_ref }} =~ ^hotfix/ ]]; 
+          then
+            echo "This PR is not allowed. Only PRs from staging or hotfix/* are allowed into main."
+            exit 1
+          fi
+      
+      - name: Only allow dev or hotfix to staging
+        if: github.base_ref == 'staging'
+        run: |
+          if [[ ${{ github.head_ref }} != dev ]] && ! [[ ${{ github.head_ref }} =~ ^hotfix/ ]]; 
+          then
+            echo "This PR is not allowed. Only PRs from dev or hotfix/* are allowed into staging."
+            exit 1
+          fi
 
   build:
     name: Build for target
     if: contains('dev,staging,main', needs.get-current-branch.outputs.value)
     needs: 
       - get-current-branch
+      - check-branch-rules
     runs-on: ubuntu-latest
     
     steps: 
