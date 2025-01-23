@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6-alpha.4](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.3...v0.1.6-alpha.4) (2025-01-23)
+
+
+### ♾️ Continuous Integration
+
+* switch deploy trigger to automatic release tags ([879866d](https://github.com/liviasoft/logistics-admin/commits/879866d5e801bcfca9d0027f73f78e1ce618f65c))
+
+### [0.1.6-alpha.3](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.2...v0.1.6-alpha.3) (2025-01-23)
+
+
+### ♾️ Continuous Integration
+
+* fix prerelease job trigger ([f1c3061](https://github.com/liviasoft/logistics-admin/commits/f1c3061c8349478197d411e08b8769881d808cce))
+
+### [0.1.6-alpha.2](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.1...v0.1.6-alpha.2) (2025-01-23)
+
+
+### ♾️ Continuous Integration
+
+* harmonize workflows ([7b62bd5](https://github.com/liviasoft/logistics-admin/commits/7b62bd53e65117f4bdf309cc9565498581bc3b0d))
+* update jobs with explicit names ([5da9f46](https://github.com/liviasoft/logistics-admin/commits/5da9f4602d58739d3adca5ef86ba7b2f87484f8e))
+
+### [0.1.6-alpha.1](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.0...v0.1.6-alpha.1) (2025-01-23)
+
+
+### 🚚 Chores
+
+* added admin tags to issue templates ([4805b5d](https://github.com/liviasoft/logistics-admin/commits/4805b5d50358347253bd95b3bd448ea5f79828d2))
+
+### [0.1.6-alpha.0](https://github.com/liviasoft/logistics-admin/compare/v0.1.5...v0.1.6-alpha.0) (2025-01-23)
+
 ### [0.1.5](https://github.com/liviasoft/logistics-admin/compare/v0.1.5-alpha.3...v0.1.5) (2025-01-23)
 
 

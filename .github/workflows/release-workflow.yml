@@ -1,0 +1,260 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - '**' # Trigger on push to any branch
+  pull_request: # Trigger on pull request events
+    branches:
+      - dev
+      - staging
+      - main
+
+jobs:
+  sanity-check:
+    name: Sanity Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '22'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Linter
+      run: npm run lint
+
+    - name: Run Tests
+      run: npm test
+
+  get-current-branch:
+    name: Get Target Branch
+    needs: 
+      - sanity-check
+    runs-on: ubuntu-latest
+    outputs:
+      value: ${{ env.current_branch }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Get Current Branch
+        # run: echo "value=$(git branch --show-current)" >> $GITHUB_OUTPUT
+        run : echo "current_branch=$(git branch --show-current)" >> $GITHUB_ENV
+      
+      - name: Display Current Branch
+        run: echo "Current Branch is ${{ env.current_branch }}"
+
+  build:
+    name: Build for target
+    if: contains('dev,staging,main', needs.get-current-branch.outputs.value)
+    needs: 
+      - get-current-branch
+    runs-on: ubuntu-latest
+    
+    steps: 
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Display Current Branch
+        run: echo "Current Branch is ${{ needs.get-current-branch.outputs.value }}"
+      
+      - name: Build for Dev
+        if: needs.get-current-branch.outputs.value == 'dev'
+        run: | 
+          echo "Building for ${{ needs.get-current-branch.outputs.value }}"
+          echo "Dev Build Steps would be here"
+      
+      - name: Build for staging
+        if: needs.get-current-branch.outputs.value == 'staging'
+        run: | 
+          echo "Building for ${{ needs.get-current-branch.outputs.value }}"
+          echo "Staging Build Steps would be here"
+      
+      - name: Build for production
+        if: needs.get-current-branch.outputs.value == 'main'
+        run: | 
+          echo "Building for ${{ needs.get-current-branch.outputs.value }}"
+          echo "Production Build Steps would be here"
+    
+  pre-release:
+    name: Push Prerelease
+    if: needs.get-current-branch.outputs.value == 'staging' && github.event_name == 'push'
+    needs: 
+      - build
+      - get-current-branch
+    runs-on: ubuntu-latest
+    outputs:
+      release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
+    permissions:
+        contents: write      # Allows pushing commits and creating tags
+        actions: write       # Allows creating releases
+        checks: write
+        deployments: write
+        id-token: write
+        issues: write
+        discussions: write
+        packages: write
+        pages: write
+        pull-requests: write
+        repository-projects: write
+        security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'  # Choose the node version
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm install
+      
+      - name: Set Git config
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+      - name: Update Version & changelog
+        run: npm run release -- --prerelease alpha
+
+      - name: Push changes and tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token for release
+        run: |
+          git push --follow-tags origin staging
+
+      - name: Get Latest Tag
+        id: latest-tag
+        run: echo "latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
+
+      - name: Print Latest Tag
+        run: echo "The latest tag is ${{ env.latest_tag }}"
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: prerelease
+          prerelease: true
+          title: "Release ${{ env.latest_tag }}"
+      
+      # - name: Set for pre-release
+      #   run: echo "is_prerelease=true" >> $GITHUB_ENV
+
+  release:
+    name: Push Release
+    if: needs.get-current-branch.outputs.value == 'main' && github.event_name == 'push'
+    needs: 
+      - build
+      - get-current-branch
+    runs-on: ubuntu-latest
+    outputs:
+      release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
+    permissions:
+      contents: write      # Allows pushing commits and creating tags
+      actions: write       # Allows creating releases
+      checks: write
+      deployments: write
+      id-token: write
+      issues: write
+      discussions: write
+      packages: write
+      pages: write
+      pull-requests: write
+      repository-projects: write
+      security-events: write
+
+    steps:
+      - name: Display Current Branch
+        run: echo "Current Branch from previous output is ${{ needs.get-current-branch.outputs.value }}"
+      
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'  # Choose the node version
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm install
+      
+      - name: Set Git config
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+      - name: Update Version & changelog
+        run: npm run release --verbose
+
+      - name: Push changes and tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token for release
+        run: |
+          git push --follow-tags origin main
+
+      - name: Get Latest Tag
+        id: latest-tag
+        run: echo "latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
+
+      - name: Print Latest Tag
+        run: echo "The latest tag is ${{ env.latest_tag }}"
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: latest
+          prerelease: false
+          title: "Release ${{ env.latest_tag }}"
+
+      # - name: Set for release
+      #   run: echo "is_release=true" >> $GITHUB_ENV
+
+  deploy-staging:
+    name: Deploy to Staging
+    if: needs.pre-release.outputs.release-tag == 'prerelease'
+    needs: 
+      - pre-release
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Deploy Pre-Release
+        run: |
+          echo "Deploy to Staging environment"
+          echo "Staging deployment steps would be here"
+
+  deploy-prod:
+    name: Deploy to Production
+    if: needs.release.outputs.release-tag == 'latest'
+    needs: 
+      - release
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Deploy Release
+        run: |
+          echo "Deploy to Production environment"
+          echo "Production deployment steps would be here"
