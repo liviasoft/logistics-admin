@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5-alpha.3](https://github.com/liviasoft/logistics-admin/compare/v0.1.5-alpha.2...v0.1.5-alpha.3) (2025-01-23)
+
+
+### ♾️ Continuous Integration
+
+* fix release job steps ([9d9e242](https://github.com/liviasoft/logistics-admin/commits/9d9e2422090397fd0866406b0287ae90bf40b033))
+
+### [0.1.5-alpha.2](https://github.com/liviasoft/logistics-admin/compare/v0.1.5-alpha.1...v0.1.5-alpha.2) (2025-01-22)
+
+
+### 🚚 Chores
+
+* fix issue templates default assignee ([a3e4bad](https://github.com/liviasoft/logistics-admin/commits/a3e4baddba770d7a10a8be79b4b8c20ff289da4e))
+
+### [0.1.5-alpha.1](https://github.com/liviasoft/logistics-admin/compare/v0.1.5-alpha.0...v0.1.5-alpha.1) (2025-01-22)
+
+
+### ♾️ Continuous Integration
+
+* refactor release and prerelease triggers ([10d26b2](https://github.com/liviasoft/logistics-admin/commits/10d26b2540b06fbe89893446b8c1e9cbb4c435d4))
+
+### [0.1.5-alpha.0](https://github.com/liviasoft/logistics-admin/compare/v0.1.4...v0.1.5-alpha.0) (2025-01-22)
+
+
+### ♾️ Continuous Integration
+
+* fix release & pre-release jobs ([3cd240c](https://github.com/liviasoft/logistics-admin/commits/3cd240c5e6a248265cd0550a96a8fa9a281acf72))
+
 ### [0.1.4](https://github.com/liviasoft/logistics-admin/compare/v0.1.4-alpha.0...v0.1.4) (2025-01-22)
 
 ### [0.1.4-alpha.0](https://github.com/liviasoft/logistics-admin/compare/v0.1.3...v0.1.4-alpha.0) (2025-01-22)
