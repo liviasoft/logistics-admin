@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7-alpha.0](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.5...v0.1.7-alpha.0) (2025-01-23)
+
+
+### 🚚 Chores
+
+* resolved main to staging merge conflict ([cd762b4](https://github.com/liviasoft/logistics-admin/commits/cd762b496e39a1206845c2e2d75f9048c0146601))
+
+### [0.1.6](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.4...v0.1.6) (2025-01-23)
+
+
+### 🚚 Chores
+
+* **release:** 0.1.6 [skip ci] ([40d24c4](https://github.com/liviasoft/logistics-admin/commits/40d24c47a6c198deb49441280bcde7a5ec6d6212))
+
+### [0.1.6-alpha.5](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.4...v0.1.6-alpha.5) (2025-01-23)
+
+
+### 🚚 Chores
+
+* clean up release workflow ([95bf55a](https://github.com/liviasoft/logistics-admin/commits/95bf55a357b12089f404711c5761edfe74d0181d))
+* clean up release workflow ([a3cdf92](https://github.com/liviasoft/logistics-admin/commits/a3cdf92d6db5c4c80f5fda610ad034a53cf3c18e))
+
+
+### ♾️ Continuous Integration
+
+* enforce branch pr rules ([1c8ab85](https://github.com/liviasoft/logistics-admin/commits/1c8ab8556c1e483f39e54013e00d00ac6924a518))
+* fix workflow push access issues ([140cafe](https://github.com/liviasoft/logistics-admin/commits/140cafe4d7eeeb43df4cdf189d6b37f5e03fe398))
+* rework to allow build ([212b0f6](https://github.com/liviasoft/logistics-admin/commits/212b0f65abe61573c80a3998c36915977adeb99f))
+* setup keys for actions ruleset bypass ([b57c8c4](https://github.com/liviasoft/logistics-admin/commits/b57c8c4804283680a7c30c7efa0c57b4f66baf99))
+
 ### [0.1.6](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.4...v0.1.6) (2025-01-23)
 
 ### [0.1.6-alpha.4](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.3...v0.1.6-alpha.4) (2025-01-23)
