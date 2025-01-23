@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - '**' # Trigger on push to any branch
-  pull_request: # Trigger on pull request events
+  pull_request: # Trigger on pull request events [opened, reopened, or source branch updated]
     branches:
       - dev
       - staging
@@ -46,17 +46,46 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Get Current Branch
-        # run: echo "value=$(git branch --show-current)" >> $GITHUB_OUTPUT
         run : echo "current_branch=$(git branch --show-current)" >> $GITHUB_ENV
       
       - name: Display Current Branch
         run: echo "Current Branch is ${{ env.current_branch }}"
+  
+  check-branch-rules:
+    if: github.event_name != 'push'
+    needs: 
+      - sanity-check
+      - get-current-branch
+    name: Check Branch Rules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Only allow staging or hotfix to main
+        if: github.base_ref == 'main'
+        run: |
+          if [[ ${{ github.head_ref }} != staging ]] && ! [[ ${{ github.head_ref }} =~ ^hotfix/ ]]; 
+          then
+            echo "This PR is not allowed. Only PRs from staging or hotfix/* are allowed into main."
+            exit 1
+          fi
+      
+      - name: Only allow dev or hotfix to staging
+        if: github.base_ref == 'staging'
+        run: |
+          if [[ ${{ github.head_ref }} != dev ]] && ! [[ ${{ github.head_ref }} =~ ^hotfix/ ]]; 
+          then
+            echo "This PR is not allowed. Only PRs from dev or hotfix/* are allowed into staging."
+            exit 1
+          fi
 
   build:
     name: Build for target
     if: contains('dev,staging,main', needs.get-current-branch.outputs.value)
     needs: 
       - get-current-branch
+      - check-branch-rules
     runs-on: ubuntu-latest
     
     steps: 
@@ -94,8 +123,8 @@ jobs:
     outputs:
       release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
     permissions:
-        contents: write      # Allows pushing commits and creating tags
-        actions: write       # Allows creating releases
+        contents: write    
+        actions: write   
         checks: write
         deployments: write
         id-token: write
@@ -116,7 +145,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'  # Choose the node version
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -150,9 +179,6 @@ jobs:
           automatic_release_tag: prerelease
           prerelease: true
           title: "Release ${{ env.latest_tag }}"
-      
-      # - name: Set for pre-release
-      #   run: echo "is_prerelease=true" >> $GITHUB_ENV
 
   release:
     name: Push Release
@@ -164,8 +190,8 @@ jobs:
     outputs:
       release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
     permissions:
-      contents: write      # Allows pushing commits and creating tags
-      actions: write       # Allows creating releases
+      contents: write      
+      actions: write   
       checks: write
       deployments: write
       id-token: write
@@ -189,7 +215,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'  # Choose the node version
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -223,9 +249,6 @@ jobs:
           automatic_release_tag: latest
           prerelease: false
           title: "Release ${{ env.latest_tag }}"
-
-      # - name: Set for release
-      #   run: echo "is_release=true" >> $GITHUB_ENV
 
   deploy-staging:
     name: Deploy to Staging
