@@ -18,6 +18,16 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
+
+    - name: Check commit message
+      run: |
+        if git log -1 --pretty=%B | grep -iq "chore(release):"; then
+          echo "Commit message contains the required string."
+          exit 0
+        else
+          echo "Commit message does not contain the required string. Failing the job."
+          exit 1
+        fi
     
     - name: Set Git config
       run: |
@@ -67,6 +77,16 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+      
+      - name: Check commit message
+        run: |
+          if git log -1 --pretty=%B | grep -iq "chore(release):"; then
+            echo "Commit message contains the required string."
+            exit 0
+          else
+            echo "Commit message does not contain the required string. Failing the job."
+            exit 1
+          fi
 
       - name: Only allow staging or hotfix to main
         if: github.base_ref == 'main'
