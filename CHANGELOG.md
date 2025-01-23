@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file. See [standa
 * rework to allow build ([212b0f6](https://github.com/liviasoft/logistics-admin/commits/212b0f65abe61573c80a3998c36915977adeb99f))
 * setup keys for actions ruleset bypass ([b57c8c4](https://github.com/liviasoft/logistics-admin/commits/b57c8c4804283680a7c30c7efa0c57b4f66baf99))
 
+### [0.1.6](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.4...v0.1.6) (2025-01-23)
+
 ### [0.1.6-alpha.4](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.3...v0.1.6-alpha.4) (2025-01-23)
 
 
