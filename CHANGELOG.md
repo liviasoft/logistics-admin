@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.4...v0.1.6) (2025-01-23)
+
 ### [0.1.6-alpha.4](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.3...v0.1.6-alpha.4) (2025-01-23)
 
 
