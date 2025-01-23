@@ -1,7 +1,7 @@
 name: "\U0001F6E0 Task Request"
 description: Request a new task for this project
 title: "[Task]: "
-labels: ["task"]
+labels: ["task", 'admin']
 type: Enhancement
 projects: 
   - 'liviasoft/2'

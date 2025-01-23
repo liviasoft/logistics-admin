@@ -1,7 +1,7 @@
 name: "\U0001F41E Bug report"
 description: Report an issue / bug with this project
 title: "[Bug]: "
-labels: ["bug"]
+labels: ["bug", 'admin']
 type: Bug
 projects: 
   - 'liviasoft/2'
