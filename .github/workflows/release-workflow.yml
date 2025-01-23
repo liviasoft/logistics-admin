@@ -92,7 +92,7 @@ jobs:
       - get-current-branch
     runs-on: ubuntu-latest
     outputs:
-      is_prerelease: ${{ env.is_prerelease }}
+      release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
     permissions:
         contents: write      # Allows pushing commits and creating tags
         actions: write       # Allows creating releases
@@ -151,8 +151,8 @@ jobs:
           prerelease: true
           title: "Release ${{ env.latest_tag }}"
       
-      - name: Set for pre-release
-        run: echo "is_prerelease=true" >> $GITHUB_ENV
+      # - name: Set for pre-release
+      #   run: echo "is_prerelease=true" >> $GITHUB_ENV
 
   release:
     name: Push Release
@@ -162,7 +162,7 @@ jobs:
       - get-current-branch
     runs-on: ubuntu-latest
     outputs:
-      is_release: ${{ env.is_release }}
+      release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
     permissions:
       contents: write      # Allows pushing commits and creating tags
       actions: write       # Allows creating releases
@@ -224,12 +224,12 @@ jobs:
           prerelease: false
           title: "Release ${{ env.latest_tag }}"
 
-      - name: Set for release
-        run: echo "is_release=true" >> $GITHUB_ENV
+      # - name: Set for release
+      #   run: echo "is_release=true" >> $GITHUB_ENV
 
   deploy-staging:
     name: Deploy to Staging
-    if: needs.pre-release.outputs.is_prerelease == true
+    if: needs.pre-release.outputs.release-tag == 'prerelease'
     needs: 
       - pre-release
     runs-on: ubuntu-latest
@@ -245,7 +245,7 @@ jobs:
 
   deploy-prod:
     name: Deploy to Production
-    if: needs.release.outputs.is_release == true
+    if: needs.release.outputs.release-tag == 'latest'
     needs: 
       - release
     runs-on: ubuntu-latest
