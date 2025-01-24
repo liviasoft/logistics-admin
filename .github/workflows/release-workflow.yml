@@ -118,6 +118,26 @@ jobs:
             exit 1
           fi
 
+  check-push-rules:
+    name: Check Push Rules
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs:
+      - workflow-actor
+      - get-current-branch
+    steps:
+      - name: Checkout If Push allowed
+        if: contains('dev,staging,main', needs.get-current-branch.outputs.value)
+        run: |
+          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]];
+          then
+            echo "Pushing directly to this branch is not allowed"
+            exit 1
+          else 
+            echo "Push is allowed"
+            exit 0
+          fi
+
   build:
     name: Build for target
     if: contains('dev,staging,main', needs.get-current-branch.outputs.value)
