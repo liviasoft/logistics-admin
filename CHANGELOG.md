@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8-alpha.0](https://github.com/liviasoft/logistics-admin/compare/v0.1.7...v0.1.8-alpha.0) (2025-01-24)
+
+
+### 🚚 Chores
+
+* **release:** test ci ([9a08cc8](https://github.com/liviasoft/logistics-admin/commits/9a08cc89591656b8e7b4c9b56bb38d5411b9fd5c))
+
+
+### ♾️ Continuous Integration
+
+* fix workflow conditionals ([7225678](https://github.com/liviasoft/logistics-admin/commits/7225678bfdc42237699ea780876ce16ec80f9356))
+* fix workflow with workflow actor ([b9d579d](https://github.com/liviasoft/logistics-admin/commits/b9d579d4b2b69de223ee8888714a89e4ba020174))
+* test workflow ([db56efb](https://github.com/liviasoft/logistics-admin/commits/db56efb958f299a3797c6afa26189827372e49b3))
+* testing to get git workflow user details ([5d50896](https://github.com/liviasoft/logistics-admin/commits/5d50896ce896cc031c69416a77ae19a848e904bc))
+* testing to get git workflow user details ([3da87a1](https://github.com/liviasoft/logistics-admin/commits/3da87a16ff1094269fccf506b096b4ee11523902))
+
 ### [0.1.7](https://github.com/liviasoft/logistics-admin/compare/v0.1.7-alpha.0...v0.1.7) (2025-01-23)
 
 ### [0.1.7-alpha.0](https://github.com/liviasoft/logistics-admin/compare/v0.1.6-alpha.5...v0.1.7-alpha.0) (2025-01-23)
