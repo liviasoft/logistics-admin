@@ -11,41 +11,10 @@ on:
       - main
 
 jobs:
-  workflow-actor:
-    name: Get Workflow Actor
-    runs-on: ubuntu-latest
-    outputs:
-      value: ${{ env.workflow_actor }}
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-    
-    - name: Check commit message
-      run: |
-        if git log -1 --pretty=%B | grep -iq "chore(release):"; then
-          echo "Workflow Actor identified"
-          echo "workflow_actor=actions@github.com" >> $GITHUB_ENV
-          exit 0
-        else
-          echo "Unknown Workflow actor"
-          echo "workflow_actor=unknown" >> $GITHUB_ENV
-          exit 0
-        fi
-    
   sanity-check:
     name: Sanity Check
     runs-on: ubuntu-latest
-    needs: 
-      - workflow-actor
     steps:
-    - name: Skip if Actor is GitHub
-      run: |
-        if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
-        then
-          echo "Workflow Actor identified"
-          exit 0
-        fi 
-
     - name: Checkout Repository
       uses: actions/checkout@v3
     
@@ -84,19 +53,10 @@ jobs:
   check-branch-rules:
     if: github.event_name != 'push'
     needs: 
-      - workflow-actor
       - get-current-branch
     name: Check Branch Rules
     runs-on: ubuntu-latest
     steps:
-      - name: Skip if Actor is GitHub
-        run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
-          then
-            echo "Workflow Actor identified"
-            exit 0
-          fi 
-
       - name: Checkout Repository
         uses: actions/checkout@v3
       
@@ -123,21 +83,14 @@ jobs:
     if: github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'Merge pull request') && !startsWith(github.event.head_commit.message, 'Merge branch')
     runs-on: ubuntu-latest
     needs:
-      - workflow-actor
       - get-current-branch
     steps:
       - name: Checkout If Push allowed
         if: contains('dev,staging,main', needs.get-current-branch.outputs.value)
         run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]];
-          then
-            echo "Pushing directly to this branch is not allowed"
-            exit 1
-          else 
-            echo "Push is allowed"
-            exit 0
-          fi
-
+          echo "Pushing directly to this branch is not allowed"
+          exit 1
+          
   build:
     name: Build for target
     if: contains('dev,staging,main', needs.get-current-branch.outputs.value)
@@ -145,7 +98,7 @@ jobs:
       - get-current-branch
     runs-on: ubuntu-latest
     
-    steps: 
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
@@ -176,7 +129,6 @@ jobs:
     needs: 
       - build
       - get-current-branch
-      - workflow-actor
     runs-on: ubuntu-latest
     outputs:
       release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
@@ -195,14 +147,6 @@ jobs:
         security-events: write
 
     steps:
-      - name: Skip if Actor is GitHub
-        run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
-          then
-            echo "Workflow Actor identified"
-            exit 0
-          fi 
-
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -256,7 +200,6 @@ jobs:
     needs: 
       - build
       - get-current-branch
-      - workflow-actor
     runs-on: ubuntu-latest
     outputs:
       release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
@@ -277,14 +220,7 @@ jobs:
     steps:
       - name: Display Current Branch
         run: echo "Current Branch from previous output is ${{ needs.get-current-branch.outputs.value }}"
-      
-      - name: Skip if Actor is GitHub
-        run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
-          then
-            echo "Workflow Actor identified"
-            exit 0
-          fi 
+
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -338,17 +274,9 @@ jobs:
     if: needs.pre-release.outputs.release-tag == 'prerelease'
     needs: 
       - pre-release
-      - workflow-actor
     runs-on: ubuntu-latest
 
     steps: 
-      - name: Skip if Actor is GitHub
-        run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
-          then
-            echo "Workflow Actor identified"
-            exit 0
-          fi 
 
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -363,17 +291,9 @@ jobs:
     if: needs.release.outputs.release-tag == 'latest'
     needs: 
       - release
-      - workflow-actor
     runs-on: ubuntu-latest
 
     steps: 
-      - name: Skip if Actor is GitHub
-        run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
-          then
-            echo "Workflow Actor identified"
-            exit 0
-          fi 
       - name: Checkout Repository
         uses: actions/checkout@v3
 
