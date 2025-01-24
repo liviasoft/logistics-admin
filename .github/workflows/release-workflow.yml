@@ -120,7 +120,7 @@ jobs:
 
   check-push-rules:
     name: Check Push Rules
-    if: github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'Merge pull request')
+    if: github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'Merge pull request') && !startsWith(github.event.head_commit.message, 'Merge branch')
     runs-on: ubuntu-latest
     needs:
       - workflow-actor
