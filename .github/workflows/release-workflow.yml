@@ -11,34 +11,47 @@ on:
       - main
 
 jobs:
-  sanity-check:
-    name: Sanity Check
+  workflow-actor:
+    name: Get Workflow Actor
     runs-on: ubuntu-latest
-
+    outputs:
+      value: ${{ env.workflow_actor }}
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-
+    
     - name: Check commit message
       run: |
         if git log -1 --pretty=%B | grep -iq "chore(release):"; then
-          echo "Commit message contains the required string."
+          echo "Workflow Actor identified"
+          echo "workflow_actor=actions@github.com" >> $GITHUB_ENV
           exit 0
         else
-          echo "Commit message does not contain the required string. Failing the job."
-          exit 1
+          echo "Unknown Workflow actor"
+          exit 0
         fi
     
-    - name: Set Git config
+  sanity-check:
+    name: Sanity Check
+    runs-on: ubuntu-latest
+    needs: 
+      - workflow-actor
+    steps:
+    - name: Skip if Actor is GitHub
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
+        if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+        then
+          echo "Workflow Actor identified"
+          exit 0
+        fi 
 
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '22'
-    
 
     - name: Install Dependencies
       run: npm install
@@ -70,24 +83,22 @@ jobs:
   check-branch-rules:
     if: github.event_name != 'push'
     needs: 
-      - sanity-check
+      - workflow-actor
       - get-current-branch
     name: Check Branch Rules
     runs-on: ubuntu-latest
     steps:
+      - name: Skip if Actor is GitHub
+        run: |
+          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          then
+            echo "Workflow Actor identified"
+            exit 0
+          fi 
+
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: Check commit message
-        run: |
-          if git log -1 --pretty=%B | grep -iq "chore(release):"; then
-            echo "Commit message contains the required string."
-            exit 0
-          else
-            echo "Commit message does not contain the required string. Failing the job."
-            exit 1
-          fi
-
       - name: Only allow staging or hotfix to main
         if: github.base_ref == 'main'
         run: |
@@ -117,14 +128,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Retrieve git config user.name
-        id: get-username
-        run: |
-          USER_NAME=$(git config --get user.name || echo "No user.name found")
-          echo "User name is: $USER_NAME"
-          echo "user_name=$USER_NAME" >> $GITHUB_ENV
-          echo $GITHUB_ENV
-
       - name: Display Current Branch
         run: echo "Current Branch is ${{ needs.get-current-branch.outputs.value }}"
       
@@ -152,6 +155,7 @@ jobs:
     needs: 
       - build
       - get-current-branch
+      - workflow-actor
     runs-on: ubuntu-latest
     outputs:
       release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
@@ -170,11 +174,19 @@ jobs:
         security-events: write
 
     steps:
+      - name: Skip if Actor is GitHub
+        run: |
+          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          then
+            echo "Workflow Actor identified"
+            exit 0
+          fi 
+
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
+      
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -219,6 +231,7 @@ jobs:
     needs: 
       - build
       - get-current-branch
+      - workflow-actor
     runs-on: ubuntu-latest
     outputs:
       release-tag: ${{ env.AUTOMATIC_RELEASES_TAG }}
@@ -240,11 +253,19 @@ jobs:
       - name: Display Current Branch
         run: echo "Current Branch from previous output is ${{ needs.get-current-branch.outputs.value }}"
       
+      - name: Skip if Actor is GitHub
+        run: |
+          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          then
+            echo "Workflow Actor identified"
+            exit 0
+          fi 
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
+      
+      
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -288,9 +309,18 @@ jobs:
     if: needs.pre-release.outputs.release-tag == 'prerelease'
     needs: 
       - pre-release
+      - workflow-actor
     runs-on: ubuntu-latest
 
     steps: 
+      - name: Skip if Actor is GitHub
+        run: |
+          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          then
+            echo "Workflow Actor identified"
+            exit 0
+          fi 
+
       - name: Checkout Repository
         uses: actions/checkout@v3
 
@@ -304,9 +334,17 @@ jobs:
     if: needs.release.outputs.release-tag == 'latest'
     needs: 
       - release
+      - workflow-actor
     runs-on: ubuntu-latest
 
     steps: 
+      - name: Skip if Actor is GitHub
+        run: |
+          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          then
+            echo "Workflow Actor identified"
+            exit 0
+          fi 
       - name: Checkout Repository
         uses: actions/checkout@v3
 
