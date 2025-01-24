@@ -231,6 +231,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.STANDARD_VERSION_PAT }}  # Use GitHub token for release
         run: |
+          echo ${{ github.event.head_commit.author }}
+          echo "Secret is ${{ env.GITHUB_TOKEN }}"
           git remote set-url origin https://${{ env.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push --follow-tags origin staging --force
 
@@ -311,6 +313,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.STANDARD_VERSION_PAT }}  # Use GitHub token for release
         run: |
+          echo ${{ github.event.head_commit.author }}
+          echo "Secret is ${{ env.GITHUB_TOKEN }}"
           git remote set-url origin https://${{ env.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push --follow-tags origin main --force
 
