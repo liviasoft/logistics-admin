@@ -28,6 +28,7 @@ jobs:
           exit 0
         else
           echo "Unknown Workflow actor"
+          echo "workflow_actor=unknown" >> $GITHUB_ENV
           exit 0
         fi
     
