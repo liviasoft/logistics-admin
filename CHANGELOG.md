@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8-alpha.1](https://github.com/liviasoft/logistics-admin/compare/v0.1.7...v0.1.8-alpha.1) (2025-01-24)
+
+
+### 🚚 Chores
+
+* **release:** 0.1.8-alpha.0 ([b9d94e6](https://github.com/liviasoft/logistics-admin/commits/b9d94e627966f7f400ff6f9b14ca50f9c4d266a0))
+* **release:** test ci ([9a08cc8](https://github.com/liviasoft/logistics-admin/commits/9a08cc89591656b8e7b4c9b56bb38d5411b9fd5c))
+
+
+### ♾️ Continuous Integration
+
+* enforcing branch push rules ([93f52d1](https://github.com/liviasoft/logistics-admin/commits/93f52d11fab4d381d7c94d55ab3dedf204d2c331))
+* fix disallowed push error flag ([4d53a06](https://github.com/liviasoft/logistics-admin/commits/4d53a06ab670d0ea63ad9750da318c04e7ae1663))
+* fix merge commit push permits ([3b140b7](https://github.com/liviasoft/logistics-admin/commits/3b140b7d53e960f6b6c860d6fcb0d08cb366251e))
+* fix workflow conditionals ([7225678](https://github.com/liviasoft/logistics-admin/commits/7225678bfdc42237699ea780876ce16ec80f9356))
+* fix workflow with workflow actor ([b9d579d](https://github.com/liviasoft/logistics-admin/commits/b9d579d4b2b69de223ee8888714a89e4ba020174))
+* job for push rules enforcement ([e3d5ba5](https://github.com/liviasoft/logistics-admin/commits/e3d5ba5a68bee9121f16963a8e96aa8119883088))
+* test tokens ([2879eab](https://github.com/liviasoft/logistics-admin/commits/2879eab814da3d4ec90bb53f8dc1a5194e994275))
+* test workflow ([db56efb](https://github.com/liviasoft/logistics-admin/commits/db56efb958f299a3797c6afa26189827372e49b3))
+* testing deploy flow ([2d5d972](https://github.com/liviasoft/logistics-admin/commits/2d5d972455faab68e3adb13faecd55b102a30bb1))
+* testing out key implementation ([625b01c](https://github.com/liviasoft/logistics-admin/commits/625b01cdf42e46d47b2c869735e75c429c291d39))
+* testing to get git workflow user details ([5d50896](https://github.com/liviasoft/logistics-admin/commits/5d50896ce896cc031c69416a77ae19a848e904bc))
+* testing to get git workflow user details ([3da87a1](https://github.com/liviasoft/logistics-admin/commits/3da87a16ff1094269fccf506b096b4ee11523902))
+* testing tokens again ([e39ba4b](https://github.com/liviasoft/logistics-admin/commits/e39ba4b5b18846ff3e590138f0215373f2dc1036))
+* testing workflow secrets ([bc5b30d](https://github.com/liviasoft/logistics-admin/commits/bc5b30d04e91f3574e1ab1b6ffafd1c969a2ef95))
+
 ### [0.1.8-alpha.0](https://github.com/liviasoft/logistics-admin/compare/v0.1.7...v0.1.8-alpha.0) (2025-01-24)
 
 
