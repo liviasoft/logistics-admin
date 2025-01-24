@@ -40,7 +40,7 @@ jobs:
     steps:
     - name: Skip if Actor is GitHub
       run: |
-        if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+        if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
         then
           echo "Workflow Actor identified"
           exit 0
@@ -91,7 +91,7 @@ jobs:
     steps:
       - name: Skip if Actor is GitHub
         run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
           then
             echo "Workflow Actor identified"
             exit 0
@@ -197,7 +197,7 @@ jobs:
     steps:
       - name: Skip if Actor is GitHub
         run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
           then
             echo "Workflow Actor identified"
             exit 0
@@ -278,7 +278,7 @@ jobs:
       
       - name: Skip if Actor is GitHub
         run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
           then
             echo "Workflow Actor identified"
             exit 0
@@ -339,7 +339,7 @@ jobs:
     steps: 
       - name: Skip if Actor is GitHub
         run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
           then
             echo "Workflow Actor identified"
             exit 0
@@ -364,7 +364,7 @@ jobs:
     steps: 
       - name: Skip if Actor is GitHub
         run: |
-          if [[ ${{ needs.workflow-actor.outputs.value }} != actions@github.com ]]; 
+          if [[ ${{ needs.workflow-actor.outputs.value }} == actions@github.com ]]; 
           then
             echo "Workflow Actor identified"
             exit 0
