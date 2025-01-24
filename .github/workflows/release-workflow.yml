@@ -231,7 +231,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.STANDARD_VERSION_PAT }}  # Use GitHub token for release
         run: |
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://${{ env.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push --follow-tags origin staging --force
 
       - name: Get Latest Tag
@@ -311,7 +311,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.STANDARD_VERSION_PAT }}  # Use GitHub token for release
         run: |
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://${{ env.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push --follow-tags origin main --force
 
       - name: Get Latest Tag
