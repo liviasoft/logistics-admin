@@ -30,7 +30,7 @@ body:
         2. Check log
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: reproduction
     attributes:
       label: Reproduction
