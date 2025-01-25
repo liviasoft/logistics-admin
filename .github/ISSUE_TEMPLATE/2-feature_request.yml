@@ -2,7 +2,7 @@ name: "\U0001F680 New Feature Request"
 description: Request a new feature for this project
 labels: ['feature request', 'admin']
 title: "[Feat]: <Short Description>"
-type: Enhancement
+type: Feature
 projects: 
   - 'liviasoft/2'
 assignees:
